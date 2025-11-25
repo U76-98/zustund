@@ -1,25 +1,19 @@
 "use client"
 import {useState} from 'react'
-import { useRouter } from 'next/navigation';
 import { Flag, ShoppingBag } from "lucide-react";
-import cartStore from './data-store/cart-store';
+import cartStore from '../data-store/cart-store';
 export default function Amazon() {
-
-  const router = useRouter()
   
   return (
     <div>
       <Navbar />
-      <div onClick={(e)=> router.push('/cart')}>view cart</div>
-  
       <div className="flex flex-row">
         <ProductList  />
-        <CartList />
       </div>
     </div>
   );
 }
-function CartList() {
+function ProductList() {
   const {cart} = cartStore();
   return (
     <div className="flex flex-col">
@@ -30,19 +24,8 @@ function CartList() {
     </div>
   );
 }
-function ProductList() {
-  const {products} = cartStore();
-  return (
-    <div className="flex flex-col">
-      {products.map((product,index) => {
-        return <ProductCard product={product} key={index} 
-        />;
-      })}
-    </div>
-  );
-}
 function ProductCard({ product}) {
-  const {addToCart,cart} = cartStore();
+  const {addToCart} = cartStore();
   return (
     <div className="flex flex-row h-[300px] w-[800px] border border-gray-100">
       <div className="p-6 bg-gray-300">
@@ -66,7 +49,6 @@ function ProductCard({ product}) {
         <div 
           onClick={(event)=> {
             addToCart(product)
-            console.log(cart)
           }}
         className="bg-yellow-300 p-2 text-center rounded-full font-bold text-lg">
           Add to Cart
